@@ -243,6 +243,16 @@ const MILK_DATA: Record<MilkCategory, { title: string; subtitle: string; items: 
         characteristics: 'Commonly added Vitamin A, D, or Calcium.',
         details: ['Enhanced nutrition', 'Public health tool', 'Standardized in many regions'],
         icon: PlusCircle
+      },
+      {
+        id: 'lactose-free',
+        name: 'Lactose-Free Dairy',
+        description: 'Lactase enzyme pre-digests lactose in cow milk.',
+        characteristics: 'Standard milk with lactase added. Tastes slightly sweeter.',
+        details: ['Safe for intolerance', 'Real dairy', 'Glucose & Galactose result'],
+        avgPrice: '₦1,800 – ₦3,500 / 1L',
+        brands: 'Arla, Peak Lactose-Free, Hollandia',
+        icon: Droplet
       }
     ]
   },
@@ -347,16 +357,6 @@ const MILK_DATA: Record<MilkCategory, { title: string; subtitle: string; items: 
     title: 'Non-Dairy Alternatives',
     subtitle: 'Plant-based beverages and dietary workarounds.',
     items: [
-      {
-        id: 'lactose-free',
-        name: 'Lactose-Free Dairy',
-        description: 'Lactase enzyme pre-digests lactose in cow milk.',
-        characteristics: 'Standard milk with lactase added. Tastes slightly sweeter.',
-        details: ['Safe for intolerance', 'Real dairy', 'Glucose & Galactose result'],
-        avgPrice: '₦1,800 – ₦3,500 / 1L',
-        brands: 'Arla, Peak Lactose-Free, Hollandia',
-        icon: Droplet
-      },
       {
         id: 'soy',
         name: 'Soy Milk',

@@ -20,7 +20,9 @@ import {
   Snowflake,
   Cylinder,
   Milk,
-  Boxes
+  Boxes,
+  Scale,
+  BookOpen
 } from 'lucide-react';
 
 type MilkCategory = 'fat' | 'processing' | 'moisture' | 'additives' | 'sources' | 'nafdac' | 'alternatives';
@@ -47,10 +49,11 @@ interface MilkItem {
   brands?: string;
 }
 
-const MILK_DATA: Record<MilkCategory, { title: string; subtitle: string; items: MilkItem[] }> = {
+const MILK_DATA: Record<MilkCategory, { title: string; subtitle: string; detailedDescription: string; items: MilkItem[] }> = {
   fat: {
     title: 'Fat Content',
     subtitle: 'The most common way milk is categorized on store shelves.',
+    detailedDescription: 'Fat content is the primary differentiator in retail dairy. Standardized via centrifugation, butterfat is either skimmed off or recombined to meet precise percentages. This process allows for consistent texture and caloric profiles across global supply chains. In developed countries with robust cold chains (like the US, UK, and Canada), milk is primarily sold as "Fresh" (Pasteurized) and classified rigorously by percentages: Whole (3.5%), Semi-Skimmed or 2% (2%), and Skimmed (0%). Because these markets do not rely on long-life UHT preservation as much, the focus is on rapid refrigeration and short-term shelf stability.',
     items: [
       {
         id: 'whole',
@@ -97,6 +100,7 @@ const MILK_DATA: Record<MilkCategory, { title: string; subtitle: string; items: 
   processing: {
     title: 'Processing Method',
     subtitle: 'Methods to ensure safety and extend shelf life.',
+    detailedDescription: 'Processing is the technical wall between the farm and the table. It involves thermal destruction of pathogens (Pasteurization), shelf-stabilization at extreme heat (UHT), and the mechanical pulverization of fat globules to prevent separation (Homogenization). Each step represents a tradeoff between local freshness and global distribute-ability.',
     items: [
       {
         id: 'raw',
@@ -138,21 +142,39 @@ const MILK_DATA: Record<MilkCategory, { title: string; subtitle: string; items: 
   moisture: {
     title: 'Moisture Content',
     subtitle: 'Concentrated milks with reduced water for longevity.',
+    detailedDescription: 'Moisture reduction is an engineering solution for storage and logistics. By removing water—the primary driver of spoilage—dairy becomes lighter, more shelf-stable, and chemically stable. From evaporation in vacuum chambers to spray-drying into fine powders, this section explores how dairy is prepared for extreme environments.',
     items: [
       {
         id: 'evaporated',
-        name: 'Evaporated Milk',
+        name: 'Evaporated Full Cream',
         description: 'Canned milk with 60% water removed.',
         characteristics: 'Slightly thick with a toasted/caramelized flavor.',
         details: ['Heated under vacuum', 'No sugar added', 'Shelf-stable'],
         shelfLife: '12-24 months (unopened)',
         avgPrice: '₦800 – ₦1,500 (410g tin)',
-        brands: 'Peak, Three Crowns, Carnation',
+        brands: 'Peak (Gold), Coast',
         nafdacStandard: 'Milk fat ≥7.5%, total solids ≥25%',
         nutritionalValue: [
            { label: 'Fat', value: '~7.5%' },
            { label: 'Lactose', value: '~10%' },
            { label: 'Protein', value: '~6.8%' }
+        ],
+        icon: Cylinder
+      },
+      {
+        id: 'evaporated-filled',
+        name: 'Evaporated Filled',
+        description: 'Evaporated skim milk with added vegetable fats.',
+        characteristics: 'Lower cholesterol alternative to full cream.',
+        details: ['Highly shelf-stable', 'Economical', 'No animal fats'],
+        shelfLife: '12-24 months',
+        avgPrice: '₦600 – ₦1,200 (160g tin)',
+        brands: 'Three Crowns, Peak (Blue), Luna',
+        nafdacStandard: 'Veg Fat ≥ 8%, Total Solids ≥ 28%',
+        nutritionalValue: [
+           { label: 'Veg Fat', value: '8%' },
+           { label: 'Total Solids', value: '28%' },
+           { label: 'Protein', value: '~6.5%' }
         ],
         icon: Cylinder
       },
@@ -183,7 +205,7 @@ const MILK_DATA: Record<MilkCategory, { title: string; subtitle: string; items: 
         shelfLife: '12-24 months',
         avgPrice: '₦2,500 – ₦4,200 (400g tin)',
         brands: 'Peak, Dano, Cowbell',
-        nafdacStandard: '≥26% milk fat, moisture ≤5%',
+        nafdacStandard: 'Milk Fat ≥26%, Total Solids ≥95%',
         nutritionalValue: [
            { label: 'Fat', value: '26%' },
            { label: 'Lactose', value: '~38%' },
@@ -201,7 +223,7 @@ const MILK_DATA: Record<MilkCategory, { title: string; subtitle: string; items: 
         shelfLife: '12-18 months',
         avgPrice: '₦150 – ₦350 (sachet)',
         brands: 'Loya, Miksi, Nunu',
-        nafdacStandard: 'Must disclose "filled milk" on label',
+        nafdacStandard: 'Must disclose "filled milk", Veg Fat ≥26%, Total Solids ≥95%',
         nutritionalValue: [
            { label: 'Total Fat', value: '26%' },
            { label: 'Sat Fat', value: '~65% of fat' },
@@ -219,7 +241,7 @@ const MILK_DATA: Record<MilkCategory, { title: string; subtitle: string; items: 
         shelfLife: '24 months',
         avgPrice: '₦2,000 – ₦4,200 (400g)',
         brands: 'Instant Slim, Anchor Skimmed',
-        nafdacStandard: 'fat ≤0.5%, SNF ≥9%',
+        nafdacStandard: 'Milk Fat ≤1.5%, Total Solids ≥95%',
         icon: Droplet
       }
     ]
@@ -227,6 +249,7 @@ const MILK_DATA: Record<MilkCategory, { title: string; subtitle: string; items: 
   additives: {
     title: 'Additives & Alterations',
     subtitle: 'Milk modified for taste or dietary needs.',
+    detailedDescription: 'Milk is a versatile substrate for modification. Whether through the addition of lactase enzymes to solve biological intolerance, or the fortification with Vitamins A and D to meet public health standards, additives transform "basic" dairy into a targeted nutritional tool. It also covers the sweetening and flavoring used for consumer palettes.',
     items: [
       {
         id: 'flavored',
@@ -259,6 +282,7 @@ const MILK_DATA: Record<MilkCategory, { title: string; subtitle: string; items: 
   sources: {
     title: 'Source Origins',
     subtitle: 'From animals providing specific nutrient profiles.',
+    detailedDescription: 'While bovine milk is the market leader, the biological blueprint for dairy varies wildly by species. Digestion, fat-globule size, and protein structure change across species. This section examines the diversity of milk sources from desert-stable camel milk to the rich, solid-heavy milk of sheep and buffalo.',
     items: [
       {
         id: 'cow',
@@ -305,6 +329,7 @@ const MILK_DATA: Record<MilkCategory, { title: string; subtitle: string; items: 
   nafdac: {
     title: 'NAFDAC Standards (Nigeria)',
     subtitle: 'Dairy regulation and classifications in the Nigerian market.',
+    detailedDescription: "Nigeria's regulatory framework, governed by NAFDAC, defines the legal boundaries of 'Milk.' These standards strictly partition products to prevent consumer deception—ensuring the several classifications of milk are sold as is and aren't sold as what they are not, such as 'Full Cream', and that every tin or sachet meets the minimum biological markers required for safe human development in West African climates.",
     items: [
       {
         id: 'nafdac-powdered',
@@ -356,6 +381,7 @@ const MILK_DATA: Record<MilkCategory, { title: string; subtitle: string; items: 
   alternatives: {
     title: 'Non-Dairy Alternatives',
     subtitle: 'Plant-based beverages and dietary workarounds.',
+    detailedDescription: 'Plant-based alternatives are not milk in a biological sense, but are engineered to fulfill the same cultural and culinary role. Through soaking, grinding, and emulsifying nuts, grains, and legumes, food scientists create "milks" that offer diverse nutritional profiles, lower carbon footprints, and solutions for allergy and lifestyle constraints.',
     items: [
       {
         id: 'soy',
@@ -411,6 +437,74 @@ const MILK_DATA: Record<MilkCategory, { title: string; subtitle: string; items: 
   }
 };
 
+const GLOSSARY_TERMS = [
+  {
+    term: 'Aseptic Packaging',
+    definition: 'A process where the product and container are sterilized separately and combined in a sterile environment. Essential for shelf-stable liquid milk.'
+  },
+  {
+    term: 'Bio-Logic',
+    definition: 'The natural, evolutionary design of milk as a nutrient-delivery system for infant mammals. "Real" milk before human technical intervention.'
+  },
+  {
+    term: 'Centrifugation',
+    definition: 'The industrial process of spinning raw milk at high speeds to separate the high-density skim milk from the low-density cream.'
+  },
+  {
+    term: 'Filled Milk',
+    definition: 'A modified milk product where the natural butterfat is removed and replaced by vegetable oils (palm or coconut) to reduce cost.'
+  },
+  {
+    term: 'Homogenization',
+    definition: 'Mechanical pulverization of fat globules to prevent them from rising to the surface, ensuring a uniform, shelf-stable consistency.'
+  },
+  {
+    term: 'SNF (Solids-Not-Fat)',
+    definition: 'The nutritional components of milk (protein, lactose, minerals) excluding water and fat. A key regulatory marker measured by NAFDAC.'
+  },
+  {
+    term: 'Skim Milk',
+    definition: 'Milk from which almost all the cream (butterfat) has been removed. It typically contains less than 0.5% fat while retaining all protein and calcium.'
+  },
+  {
+    term: 'UHT (Ultra-High Temperature)',
+    definition: 'Flash-heating milk to 135°C+ for 2 seconds to destroy all pathogens, allowing for months of storage without refrigeration.'
+  }
+];
+
+const COMPARISON_DATA = [
+  {
+    feature: 'Fat Source',
+    skim: '100% Butterfat (Mostly Removed)',
+    filled: 'Vegetable Fat (Palm/Coconut)',
+    fullCream: '100% Butterfat (Fixed %)'
+  },
+  {
+    feature: 'Fat Content',
+    skim: '< 0.5%',
+    filled: '≥ 3.2% (Liq) / ≥ 26% (Pow)',
+    fullCream: '≥ 3.5% (Liq) / ≥ 26% (Pow)'
+  },
+  {
+    feature: 'Protein Levels',
+    skim: 'Highest density (~3.5%)',
+    filled: 'Standardized (min 2.9%)',
+    fullCream: 'Natural Balance (~3.4%)'
+  },
+  {
+    feature: 'NAFDAC Requirement',
+    skim: 'Must display "Skimmed" + Vit A',
+    filled: 'Must display "Filled" + Vit A',
+    fullCream: 'Must display "Full Cream" + Vit A'
+  },
+  {
+    feature: 'Market Role',
+    skim: 'Weight Management',
+    filled: 'Cost / Lower Cholesterol',
+    fullCream: 'Optimal Nutrition'
+  }
+];
+
 export default function App() {
   const [activeCategory, setActiveCategory] = useState<MilkCategory>('fat');
   const [selectedItem, setSelectedItem] = useState<MilkItem | null>(null);
@@ -436,7 +530,7 @@ export default function App() {
             </div>
             <span className="font-mono text-[10px] font-bold tracking-[0.2em] uppercase">Dairy.Lab</span>
           </div>
-          <div className="hidden md:flex gap-8">
+            <div className="hidden md:flex gap-8">
             <button 
               onClick={() => document.getElementById('manifesto')?.scrollIntoView({ behavior: 'smooth' })}
               className="mono text-slate-400 hover:text-ink transition-colors cursor-pointer"
@@ -448,6 +542,18 @@ export default function App() {
               className="mono text-slate-400 hover:text-ink transition-colors cursor-pointer"
             >
               Analysis
+            </button>
+            <button 
+              onClick={() => document.getElementById('comparison')?.scrollIntoView({ behavior: 'smooth' })}
+              className="mono text-slate-400 hover:text-ink transition-colors cursor-pointer"
+            >
+              Compare
+            </button>
+            <button 
+              onClick={() => document.getElementById('glossary')?.scrollIntoView({ behavior: 'smooth' })}
+              className="mono text-slate-400 hover:text-ink transition-colors cursor-pointer"
+            >
+              Glossary
             </button>
             <button 
               onClick={() => {
@@ -470,26 +576,26 @@ export default function App() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <span className="mono text-accent mb-6 block font-bold">The Complete Guide</span>
+            <span className="mono text-accent mb-6 block font-bold">The Great Modification</span>
             <h1 className="text-6xl md:text-8xl leading-[0.9] mb-12 tracking-tight">
-              Learn about milk <br />
-              <span className="text-slate-300 italic">and stop panicking</span>
+              Nobody drinks <br />
+              <span className="text-slate-300 italic">"real milk"</span>
             </h1>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
               <div className="space-y-6">
                 <p className="text-xl text-slate-600 font-light leading-relaxed">
-                  Milk is one of the most misunderstood staples in our pantry. From complex processing to modern dietary 
-                  adaptations, understanding what you're drinking is the first step to clarity.
+                  When milk is extracted from the animal, it is a biological fluid designed for calves. For humans, 
+                  "real" raw milk is a high-risk gamble. What we consume instead is a highly engineered product.
                 </p>
                 <div className="h-px w-24 bg-accent/30" />
                 <p className="text-slate-500 leading-relaxed font-light">
-                  Whether you are navigating NAFDAC regulations, exploring plant-based alternatives, or analyzing fat 
-                  matrices, this encyclopedia provides the technical foundation you need to choose with confidence.
+                  Through pasteurisation, nutrients are subtracted, added, or fortified. Commercial dairy is 
+                  modified for safety, dietary compatibility, shelf life, and the brutal demands of global economics.
                 </p>
               </div>
               <div className="p-8 border border-line bg-slate-50/50 italic text-slate-500 font-serif leading-relaxed text-sm">
-                "Information is the best antidote to uncertainty. By breaking down milk into its core classifications, 
-                we transform a biological complexity into accessible technical knowledge."
+                "In essence, modern milk is not a natural occurrence but a technological achievement—a liquid 
+                infrastructure refined to survive the supply chain and fit our specific nutritional blueprints."
               </div>
             </div>
           </motion.div>
@@ -533,10 +639,13 @@ export default function App() {
               key={activeCategory}
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="mb-16"
+              className="mb-16 max-w-3xl"
             >
               <h2 className="text-5xl md:text-6xl mb-4 leading-tight">{MILK_DATA[activeCategory].title}</h2>
-              <p className="text-slate-400 font-mono text-[10px] uppercase tracking-[0.2em]">{MILK_DATA[activeCategory].subtitle}</p>
+              <p className="text-slate-400 font-mono text-[10px] uppercase tracking-[0.2em] mb-8">{MILK_DATA[activeCategory].subtitle}</p>
+              <p className="text-lg text-slate-500 font-light leading-relaxed border-l border-line pl-8">
+                {MILK_DATA[activeCategory].detailedDescription}
+              </p>
             </motion.div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -696,13 +805,79 @@ export default function App() {
         )}
       </AnimatePresence>
 
+      {/* Technical Comparison Engine */}
+      <section id="comparison" className="border-b border-line bg-white py-32">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="mb-16">
+            <span className="mono text-accent mb-4 block font-bold uppercase text-xs tracking-widest">Efficiency Engine</span>
+            <h2 className="text-5xl md:text-6xl tracking-tight mb-8">Technical Comparison</h2>
+            <p className="text-slate-500 max-w-2xl font-light leading-relaxed">
+              Analyzing the primary markers of industrial dairy.
+            </p>
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr>
+                  <th className="p-8 border border-line bg-slate-50 text-left mono text-[10px] uppercase font-bold text-slate-400">Parameter</th>
+                  <th className="p-8 border border-line bg-white text-left italic font-serif text-xl border-t-4 border-t-blue-500">Skim Milk</th>
+                  <th className="p-8 border border-line bg-white text-left italic font-serif text-xl border-t-4 border-t-emerald-500">Filled Milk</th>
+                  <th className="p-8 border border-line bg-white text-left italic font-serif text-xl border-t-4 border-t-accent">Full Cream</th>
+                </tr>
+              </thead>
+              <tbody>
+                {COMPARISON_DATA.map((row, idx) => (
+                  <tr key={idx} className="group hover:bg-slate-50 transition-colors">
+                    <td className="p-8 border border-line bg-slate-50/50 mono text-[10px] uppercase font-bold text-slate-500">{row.feature}</td>
+                    <td className="p-8 border border-line text-slate-600 font-light leading-relaxed">{row.skim}</td>
+                    <td className="p-8 border border-line text-slate-600 font-light leading-relaxed">{row.filled}</td>
+                    <td className="p-8 border border-line text-slate-600 font-light leading-relaxed">{row.fullCream}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      {/* Glossary Section */}
+      <section id="glossary" className="bg-slate-50 py-32">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
+            <div className="lg:col-span-1">
+              <span className="mono text-accent mb-4 block font-bold">Lexicon</span>
+              <h2 className="text-5xl tracking-tight mb-8 leading-tight italic">Knowledge is the first line of defense.</h2>
+              <p className="text-slate-500 font-light leading-relaxed mb-12">
+                Understanding the technical terminology used in dairy processing transforms consumer confusion into 
+                insider technical insight.
+              </p>
+              <div className="w-16 h-px bg-line" />
+            </div>
+            <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-px bg-line border border-line">
+              {GLOSSARY_TERMS.map((term, i) => (
+                <div key={i} className="bg-white p-8 space-y-4 hover:bg-slate-50 transition-colors">
+                  <div className="flex items-center gap-2">
+                    <BookOpen size={14} className="text-accent" />
+                    <h3 className="mono font-bold uppercase text-[10px] tracking-widest text-ink">{term.term}</h3>
+                  </div>
+                  <p className="text-sm text-slate-500 font-light leading-relaxed">
+                    {term.definition}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="border-t border-line bg-white py-24 px-6 text-center">
          <div className="max-w-2xl mx-auto space-y-8">
-            <h2 className="text-4xl italic">Knowledge is clarity.</h2>
+            <h2 className="text-4xl italic">Milk is a technology.</h2>
             <p className="text-slate-400 font-light leading-relaxed">
-              From traditional sources to modern plant-based innovations, dairy and its alternatives represent an 
-              incredible journey of nutritional adaptation. This encyclopedia is here to help you navigate it all.
+              From the centrifuge to the UHT furnace, the journey of liquid dairy is one of constant modification. 
+              Understanding these classifications is understanding the intersection of biology and extreme engineering.
             </p>
             <div className="flex justify-center gap-12 pt-8">
                <div className="text-left">

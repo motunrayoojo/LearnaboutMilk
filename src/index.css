@@ -1,32 +1,43 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,700&family=Space+Grotesk:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,300;1,700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Playfair Display", serif;
-  --font-display: "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
 
-  --color-warm-off-white: #FDFCF9;
-  --color-milk-blue: #A5C9E1;
-  --color-milk-cream: #F5E8D3;
+  --color-ink: #0F172A;
+  --color-paper: #F8FAFC;
+  --color-accent: #3B82F6;
+  --color-line: #E2E8F0;
 }
 
 body {
-  @apply bg-warm-off-white text-slate-900 font-sans;
+  @apply bg-paper text-ink font-sans antialiased;
 }
 
 h1, h2, h3 {
-  @apply font-serif;
+  @apply font-serif italic font-light;
+}
+
+.mono {
+  @apply font-mono text-[11px] tracking-tight uppercase;
 }
 
 .glass-card {
-  @apply bg-white/70 backdrop-blur-md border border-white/40 shadow-sm rounded-2xl;
+  @apply bg-white border border-line shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.06)] transition-all duration-500 rounded-none;
 }
 
 .tab-active {
-  @apply bg-milk-blue text-white shadow-md;
+  @apply border-b-2 border-accent text-accent bg-transparent;
 }
 
 .tab-inactive {
-  @apply hover:bg-slate-100 text-slate-500 bg-transparent;
+  @apply border-b-2 border-transparent text-slate-400 hover:text-slate-600;
+}
+
+.grid-bg {
+  background-image: linear-gradient(var(--color-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-line) 1px, transparent 1px);
+  background-size: 40px 40px;
 }

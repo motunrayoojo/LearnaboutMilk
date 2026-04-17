@@ -23,7 +23,7 @@ import {
   Boxes
 } from 'lucide-react';
 
-type MilkCategory = 'fat' | 'processing' | 'moisture' | 'additives' | 'sources' | 'nafdac';
+type MilkCategory = 'fat' | 'processing' | 'moisture' | 'additives' | 'sources' | 'nafdac' | 'alternatives';
 
 interface MilkItem {
   id: string;
@@ -59,6 +59,7 @@ const MILK_DATA: Record<MilkCategory, { title: string; subtitle: string; items: 
         fat: '3.25% - 3.5%',
         characteristics: 'The richest, creamiest, and most calorie-dense option.',
         details: ['Natural proportion of fat', 'High Vitamin D naturally', 'Richest texture'],
+        shelfLife: 'Fresh: 5-7 days | UHT: 3-6 months',
         icon: Milk
       },
       {
@@ -68,6 +69,7 @@ const MILK_DATA: Record<MilkCategory, { title: string; subtitle: string; items: 
         fat: '2%',
         characteristics: 'Retains some creaminess but with fewer calories.',
         details: ['Skimmed butterfat', 'Standard grocery choice', 'Versatile for cooking'],
+        shelfLife: 'Fresh: 1-2 weeks',
         icon: Droplet
       },
       {
@@ -77,6 +79,7 @@ const MILK_DATA: Record<MilkCategory, { title: string; subtitle: string; items: 
         fat: '1%',
         characteristics: 'Noticeably thinner and less flavorful than 2%.',
         details: ['High calorie reduction', 'Healthy heart choice', 'Watery finish'],
+        shelfLife: 'Fresh: 1-2 weeks',
         icon: Droplet
       },
       {
@@ -86,6 +89,7 @@ const MILK_DATA: Record<MilkCategory, { title: string; subtitle: string; items: 
         fat: '< 0.5%',
         characteristics: 'Almost all butterfat removed via centrifuge. Very thin.',
         details: ['Lowest calorie count', 'Same protein as whole milk', 'Centrifuge processed'],
+        shelfLife: 'Fresh: 1-2 weeks | Powder: 24 months',
         icon: Droplet
       }
     ]
@@ -141,6 +145,15 @@ const MILK_DATA: Record<MilkCategory, { title: string; subtitle: string; items: 
         description: 'Canned milk with 60% water removed.',
         characteristics: 'Slightly thick with a toasted/caramelized flavor.',
         details: ['Heated under vacuum', 'No sugar added', 'Shelf-stable'],
+        shelfLife: '12-24 months (unopened)',
+        avgPrice: '₦800 – ₦1,500 (410g tin)',
+        brands: 'Peak, Three Crowns, Carnation',
+        nafdacStandard: 'Milk fat ≥7.5%, total solids ≥25%',
+        nutritionalValue: [
+           { label: 'Fat', value: '~7.5%' },
+           { label: 'Lactose', value: '~10%' },
+           { label: 'Protein', value: '~6.8%' }
+        ],
         icon: Cylinder
       },
       {
@@ -149,6 +162,15 @@ const MILK_DATA: Record<MilkCategory, { title: string; subtitle: string; items: 
         description: 'Water removed and sugar added.',
         characteristics: 'Extremely thick, sticky, and very sweet.',
         details: ['Water removed by heat', 'Added sugar acts as preservative', 'Used in baking'],
+        shelfLife: 'Up to 2 years (unopened)',
+        avgPrice: '₦1,000 – ₦1,800 (397g tin)',
+        brands: 'Hollandia, Three Crowns, Ideal',
+        nafdacStandard: 'Must declare "sweetened condensed milk"',
+        nutritionalValue: [
+           { label: 'Sugar', value: '~55%' },
+           { label: 'Fat', value: '~8%' },
+           { label: 'Protein', value: '~8%' }
+        ],
         icon: Boxes
       },
       {
@@ -158,6 +180,15 @@ const MILK_DATA: Record<MilkCategory, { title: string; subtitle: string; items: 
         characteristics: 'Contains all natural milk fat. Rich and nutrient-dense.',
         details: ['12-24 months shelf life', 'High energy', 'Standard whole milk replacement'],
         fat: '≥26%',
+        shelfLife: '12-24 months',
+        avgPrice: '₦2,500 – ₦4,200 (400g tin)',
+        brands: 'Peak, Dano, Cowbell',
+        nafdacStandard: '≥26% milk fat, moisture ≤5%',
+        nutritionalValue: [
+           { label: 'Fat', value: '26%' },
+           { label: 'Lactose', value: '~38%' },
+           { label: 'Protein', value: '~26%' }
+        ],
         icon: Snowflake
       },
       {
@@ -167,6 +198,15 @@ const MILK_DATA: Record<MilkCategory, { title: string; subtitle: string; items: 
         characteristics: 'Butterfat replaced with oils like palm or coconut.',
         details: ['Affordable alternative', 'Easily soluble', 'Widely used in households'],
         fat: '~3.5% total fat',
+        shelfLife: '12-18 months',
+        avgPrice: '₦150 – ₦350 (sachet)',
+        brands: 'Loya, Miksi, Nunu',
+        nafdacStandard: 'Must disclose "filled milk" on label',
+        nutritionalValue: [
+           { label: 'Total Fat', value: '26%' },
+           { label: 'Sat Fat', value: '~65% of fat' },
+           { label: 'Protein', value: '~26%' }
+        ],
         icon: Zap
       },
       {
@@ -176,6 +216,10 @@ const MILK_DATA: Record<MilkCategory, { title: string; subtitle: string; items: 
         characteristics: 'Ideal for weight management and fitness.',
         details: ['Max 0.5% fat', 'High protein content', 'Baking ingredient'],
         fat: '≤0.5%',
+        shelfLife: '24 months',
+        avgPrice: '₦2,000 – ₦4,200 (400g)',
+        brands: 'Instant Slim, Anchor Skimmed',
+        nafdacStandard: 'fat ≤0.5%, SNF ≥9%',
         icon: Droplet
       }
     ]
@@ -193,14 +237,6 @@ const MILK_DATA: Record<MilkCategory, { title: string; subtitle: string; items: 
         icon: PlusCircle
       },
       {
-        id: 'lactose-free',
-        name: 'Lactose-Free',
-        description: 'Lactase enzyme pre-digests lactose.',
-        characteristics: 'Standard milk with lactase added. Tastes slightly sweeter.',
-        details: ['Safe for intolerance', 'Real dairy', 'Glucose & Galactose result'],
-        icon: Droplet
-      },
-      {
         id: 'fortified',
         name: 'Fortified Milk',
         description: 'Extra vitamins or minerals added.',
@@ -212,7 +248,7 @@ const MILK_DATA: Record<MilkCategory, { title: string; subtitle: string; items: 
   },
   sources: {
     title: 'Source Origins',
-    subtitle: 'From animals to plant-based alternatives.',
+    subtitle: 'From animals providing specific nutrient profiles.',
     items: [
       {
         id: 'cow',
@@ -253,14 +289,6 @@ const MILK_DATA: Record<MilkCategory, { title: string; subtitle: string; items: 
         characteristics: 'Stable in hot climates, unique mineral content.',
         details: ['Medicinal reputation', 'High Vitamin C', 'Common in Asia & Africa'],
         icon: Milk
-      },
-      {
-        id: 'plant',
-        name: 'Plant Alternatives',
-        description: 'Non-dairy beverages from nuts and grains.',
-        characteristics: 'Soaked and strained plants like Soy, Almond, and Oat.',
-        details: ['Lactose-free naturally', 'Diverse flavors', 'Vegan & Eco-friendly'],
-        icon: Leaf
       }
     ]
   },
@@ -271,73 +299,112 @@ const MILK_DATA: Record<MilkCategory, { title: string; subtitle: string; items: 
       {
         id: 'nafdac-powdered',
         name: 'Powdered Whole Milk',
-        description: 'Dominant format due to grid constraints.',
-        characteristics: 'Spray-dried fresh whole milk with ~97% moisture removed.',
-        details: ['Peak, Dano, Three Crowns', 'Shelf life: 12-24 months', 'Ideal for low power areas'],
-        fat: '26% fat',
-        nafdacStandard: '≥26% milk fat, moisture ≤5%',
-        nutritionalValue: [
-          { label: 'Fat', value: '26%' },
-          { label: 'Lactose', value: '~38%' },
-          { label: 'Protein', value: '~26%' }
-        ],
-        avgPrice: '₦200 – ₦500 (sachet)',
-        brands: 'Peak, Dano, Three Crowns, Cowbell',
+        description: 'The primary dairy format in Nigeria, strictly regulated for fat and moisture preservation in hot climates.',
+        details: [],
+        characteristics: '',
+        nafdacStandard: 'NIS 38:2018 (Standard for Milk Powder and Cream Powder): Full Cream Milk Powder shall contain not less than 26.0% and not more than 40.0% milk fat by weight. The moisture content shall not exceed 5.0%. It must be fortified with Vitamin A (min 2000 IU / 100g). Microbiological limits: Salmonella (Absent in 25g), E. coli (< 10 cfu/g). Registration by NAFDAC is mandatory; the product name must be conspicuously displayed as "Full Cream Milk Powder".',
         icon: Milk
       },
       {
         id: 'nafdac-full-cream',
         name: 'Full Cream (Liquid)',
-        description: 'Full-fat cow milk with nothing removed.',
-        characteristics: 'UHT variants are favored for shelf stability without refrigeration.',
-        details: ['Hollandia, Arla, Olympic', 'UHT: 3-6 months stability', 'Rich liquid dairy'],
-        fat: '≥3.5% fat',
-        nafdacStandard: 'fat ≥3.5%, SNF ≥8.5%',
-        nutritionalValue: [
-          { label: 'Fat', value: '≥3.5%' },
-          { label: 'Lactose', value: '~4.7%' },
-          { label: 'Protein', value: '~3.3%' }
-        ],
-        avgPrice: '₦600 – ₦1,200',
-        brands: 'Hollandia, Arla, Olympic',
+        description: 'Standardized liquid bovine milk, requiring strict aseptic packaging or cold chain compliance as per NAFDAC guidelines.',
+        details: [],
+        characteristics: '',
+        nafdacStandard: 'NIS 37:2018 (Standard for Fluid Milk): Liquid Full Cream Milk shall contain no less than 3.5% milk fat and not less than 8.5% milk solids-not-fat. If UHT or Pasteurised, it must be clearly stated on the label. Mandatory fortification of Vitamin A is required in Nigeria for retail fluid milk. Label must include NAFDAC Registration Number, Batch Number, and "Best Before" date.',
         icon: Droplet
       },
       {
         id: 'nafdac-filled',
         name: 'Filled Milk',
-        description: 'Skimmed milk + vegetable fat blend.',
-        characteristics: 'Butterfat replaced with oils like palm; widely used in affordable blends.',
-        details: ['Must be labeled "Filled Milk"', 'Cheaper production', 'Widely consumed'],
-        fat: '~3.5% total fat',
-        nafdacStandard: 'Must disclose "filled milk" on label',
-        avgPrice: '₦150 – ₦350 (sachet)',
-        brands: 'Loya, Miksi, Nunu',
+        description: 'An economically optimized blend where butterfat is replaced by vegetable oil, requiring explicit labelling to prevent consumer deception.',
+        details: [],
+        characteristics: '',
+        nafdacStandard: 'Total fat content: ≥3.2% (liquid filled milk) or ≥26% (powdered form) · The vegetable fat used must be food-grade, non-hydrogenated (to avoid industrial trans fats), and from approved sources (palm oil, palm kernel, coconut) · Protein: ≥2.9% (liquid) · Vitamins A and D must be added at NAFDAC-approved fortification levels to compensate for their absence in vegetable fat · Product must be clearly labelled "Filled Milk" or "Recombined Filled Milk" — selling it as whole milk or full cream milk is a regulatory violation · NAFDAC registration number is mandatory on all packaging',
         icon: Snowflake
       },
       {
         id: 'nafdac-evaporated',
         name: 'Evaporated Tin',
-        description: 'Concentrated, sterilized, unsweetened.',
-        characteristics: 'A Nigerian kitchen staple for tea, oats, and soups.',
-        details: ['Peak, Three Crowns', '12-24 months shelf life', 'Rich and creamy'],
-        fat: '~7.5% fat',
-        nafdacStandard: 'fat ≥7.5%, total solids ≥25%',
-        nutritionalValue: [
-          { label: 'Fat', value: '~7.5%' },
-          { label: 'Lactose', value: '~10%' },
-          { label: 'Protein', value: '~6.8%' }
-        ],
-        avgPrice: '₦800 – ₦1,500 (tin)',
-        brands: 'Peak, Three Crowns, Carnation',
+        description: 'A highly concentrated dairy staple subject to minimum total solids and fat requirements for consumer protection.',
+        details: [],
+        characteristics: '',
+        nafdacStandard: 'NIS 33:2018 (Standard for Evaporated Milk): Evaporated Milk shall contain not less than 7.5% milk fat and not less than 25% total milk solids. The product must be concentrated and sterilized by heat in a sealed container to ensure commercial sterility. Only specified food additives (stabilizers) permitted by NAFDAC are allowed. Mandatory fortification with Vitamin A is required.',
         icon: Cylinder
       },
       {
-        id: 'nafdac-tiger-nut',
+        id: 'nafdac-condensed',
+        name: 'Condensed Milk',
+        description: 'Concentrated milk with added sugar, requiring strict disclosure of sweeteners and milk solids.',
+        details: [],
+        characteristics: '',
+        nafdacStandard: 'Milk and Milk Products Regulations 2021: Sweetened Condensed Milk shall be obtained from partial removal of water from milk with addition of sugar; it shall contain not less than 8.0% fat and not less than 28.0% total milk solids. For Condensed Skimmed Milk, fat shall not exceed 0.5% and total milk solids shall be at least 24%. It must be conspicuously labelled as "Sweetened Condensed Milk" and the NAFDAC number is mandatory.',
+        icon: Boxes
+      }
+    ]
+  },
+  alternatives: {
+    title: 'Non-Dairy Alternatives',
+    subtitle: 'Plant-based beverages and dietary workarounds.',
+    items: [
+      {
+        id: 'lactose-free',
+        name: 'Lactose-Free Dairy',
+        description: 'Lactase enzyme pre-digests lactose in cow milk.',
+        characteristics: 'Standard milk with lactase added. Tastes slightly sweeter.',
+        details: ['Safe for intolerance', 'Real dairy', 'Glucose & Galactose result'],
+        avgPrice: '₦1,800 – ₦3,500 / 1L',
+        brands: 'Arla, Peak Lactose-Free, Hollandia',
+        icon: Droplet
+      },
+      {
+        id: 'soy',
+        name: 'Soy Milk',
+        description: 'Made from soaked and ground soybeans.',
+        characteristics: 'Closest protein profile to dairy milk.',
+        details: ['Complete protein', 'Contains isoflavones', 'Versatile texture'],
+        avgPrice: '₦800 – ₦1,800 / 500ml',
+        brands: 'Vitasoy, Hollandia Soy, SoyGood',
+        icon: Leaf
+      },
+      {
+        id: 'oat',
+        name: 'Oat Milk',
+        description: 'Liquid from soaked oats and water.',
+        characteristics: 'Creamy texture, slightly sweet grain flavor.',
+        details: ['High carbohydrates', 'Oat-fibre content', 'Great for coffee'],
+        avgPrice: '₦1,500 – ₦3,000 / 500ml',
+        brands: 'Oatly, Alpro, Minor Figures',
+        icon: Leaf
+      },
+      {
+        id: 'coconut',
+        name: 'Coconut Milk',
+        description: 'Extracted from the grated pulp of mature coconuts.',
+        characteristics: 'Rich and creamy with high saturated fat.',
+        details: ['Traditional in cooking', 'Specific fat profile', 'Distinct aroma'],
+        avgPrice: '₦600 – ₦1,400 / 400ml tin',
+        brands: 'Aroy-D, Grace, Chaokoh',
+        icon: Leaf
+      },
+      {
+        id: 'almond',
+        name: 'Almond Milk',
+        description: 'Ground almonds and water.',
+        characteristics: 'Low calorie, nutty flavor, thin consistency.',
+        details: ['Vitamin E source', 'Low protein', 'Light profile'],
+        avgPrice: '₦2,000 – ₦4,500 / 500ml',
+        brands: 'Almond Breeze, Silk, Alpro',
+        icon: Leaf
+      },
+      {
+        id: 'tiger-nut',
         name: 'Tiger Nut (Kunu aya)',
         description: 'Traditional Nigerian plant beverage.',
         characteristics: 'Naturally lactose-free, rich in iron and fibre.',
         details: ['Locally produced', 'Cultural staple', 'Natural dairy alternative'],
         avgPrice: '₦200 – ₦600 / cup',
+        brands: 'Local Artisans, TigerVit',
         icon: Leaf
       }
     ]
@@ -349,291 +416,309 @@ export default function App() {
   const [selectedItem, setSelectedItem] = useState<MilkItem | null>(null);
 
   const categoryConfigs: { id: MilkCategory; label: string; icon: any }[] = [
-    { id: 'fat', label: 'Fat Content', icon: Droplet },
+    { id: 'fat', label: 'Fat Level', icon: Droplet },
     { id: 'processing', label: 'Processing', icon: Thermometer },
     { id: 'moisture', label: 'Moisture', icon: Layers },
     { id: 'additives', label: 'Additives', icon: PlusCircle },
-    { id: 'sources', label: 'Sources', icon: Cat },
-    { id: 'nafdac', label: 'Nigeria (NAFDAC)', icon: Info },
+    { id: 'sources', label: 'Origins', icon: Cat },
+    { id: 'alternatives', label: 'Alternatives', icon: Leaf },
+    { id: 'nafdac', label: 'NAFDAC', icon: Info },
   ];
 
   return (
-    <div className="min-h-screen pb-20">
-      {/* Hero Section */}
-      <header className="relative h-[40vh] flex flex-col items-center justify-center overflow-hidden bg-slate-900 text-white px-6">
-        <div 
-          className="absolute inset-0 opacity-40 mix-blend-overlay pointer-events-none"
-          style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&q=80&w=1200')`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        />
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="relative z-10 text-center max-w-4xl"
-        >
-          <span className="text-milk-blue font-display tracking-widest uppercase text-xs mb-4 block">Encyclopedia of Dairy</span>
-          <h1 className="text-5xl md:text-7xl font-serif font-bold mb-6 italic">Milk Classified</h1>
-          <p className="text-lg md:text-xl text-slate-300 font-light max-w-2xl mx-auto leading-relaxed">
-            Understanding the spectrum of dairy through fat content, processing techniques, moisture levels, and origins.
-          </p>
-        </motion.div>
+    <div className="min-h-screen grid-bg">
+      {/* Top Bar */}
+      <nav className="border-b border-line bg-white/80 backdrop-blur sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-6 h-6 bg-ink rotate-45 flex items-center justify-center">
+              <Milk size={12} className="text-paper -rotate-45" />
+            </div>
+            <span className="font-mono text-[10px] font-bold tracking-[0.2em] uppercase">Dairy.Lab</span>
+          </div>
+          <div className="hidden md:flex gap-8">
+            <button 
+              onClick={() => document.getElementById('manifesto')?.scrollIntoView({ behavior: 'smooth' })}
+              className="mono text-slate-400 hover:text-ink transition-colors cursor-pointer"
+            >
+              Manifesto
+            </button>
+            <button 
+              onClick={() => document.getElementById('analysis')?.scrollIntoView({ behavior: 'smooth' })}
+              className="mono text-slate-400 hover:text-ink transition-colors cursor-pointer"
+            >
+              Analysis
+            </button>
+            <button 
+              onClick={() => {
+                setActiveCategory('processing');
+                document.getElementById('analysis')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="mono text-slate-400 hover:text-ink transition-colors cursor-pointer"
+            >
+              Safety
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      {/* Hero / Intro Section */}
+      <header id="manifesto" className="max-w-7xl mx-auto px-6 pt-24 pb-32 border-x border-line bg-white">
+        <div className="max-w-4xl">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <span className="mono text-accent mb-6 block font-bold">The Great Modification</span>
+            <h1 className="text-6xl md:text-8xl leading-[0.9] mb-12 tracking-tight">
+              Nobody drinks <br />
+              <span className="text-slate-300 italic">"real milk"</span>
+            </h1>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+              <div className="space-y-6">
+                <p className="text-xl text-slate-600 font-light leading-relaxed">
+                  When milk is extracted from the animal, it is a biological fluid designed for calves. For humans, 
+                  "real" raw milk is a high-risk gamble. What we consume instead is a highly engineered product.
+                </p>
+                <div className="h-px w-24 bg-accent/30" />
+                <p className="text-slate-500 leading-relaxed font-light">
+                  Through pasteurisation, nutrients are subtracted, added, or fortified. Commercial dairy is 
+                  modified for safety, dietary compatibility, shelf life, and the brutal demands of global economics.
+                </p>
+              </div>
+              <div className="p-8 border border-line bg-slate-50/50 italic text-slate-500 font-serif leading-relaxed text-sm">
+                "In essence, modern milk is not a natural occurrence but a technological achievement—a liquid 
+                infrastructure refined to survive the supply chain and fit our specific nutritional blueprints."
+              </div>
+            </div>
+          </motion.div>
+        </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-6 -mt-10 relative z-20">
-        {/* Category Navigation */}
-        <div className="flex flex-wrap justify-center gap-2 mb-12">
-          {categoryConfigs.map((cat) => {
-            const Icon = cat.icon;
-            return (
-              <button
-                key={cat.id}
-                onClick={() => {
-                  setActiveCategory(cat.id);
-                  setSelectedItem(null);
-                }}
-                className={`flex items-center gap-2 px-6 py-4 rounded-full transition-all duration-300 ${
-                  activeCategory === cat.id ? 'tab-active' : 'tab-inactive bg-white border border-slate-100'
-                }`}
-              >
-                <Icon size={18} />
-                <span className="font-medium">{cat.label}</span>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Category Description */}
-        <motion.div
-          key={activeCategory}
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="mb-12 border-l-4 border-milk-blue pl-6"
-        >
-          <h2 className="text-3xl font-serif font-bold text-slate-800 mb-2">{MILK_DATA[activeCategory].title}</h2>
-          <p className="text-slate-500 max-w-2xl">{MILK_DATA[activeCategory].subtitle}</p>
-        </motion.div>
-
-        {/* Content Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <AnimatePresence mode="wait">
-            {MILK_DATA[activeCategory].items.map((item, idx) => {
-              const Icon = item.icon;
+      {/* Main Classification Tool */}
+      <section id="analysis" className="border-y border-line bg-white">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row min-h-[80vh]">
+          {/* Sidebar Nav */}
+          <div className="w-full md:w-72 border-r border-line p-8 flex flex-col gap-2 bg-slate-50/30">
+            <span className="mono text-slate-400 mb-6 font-bold">Classifications</span>
+            {categoryConfigs.map((cat) => {
+              const Icon = cat.icon;
               return (
-                <motion.div
-                  key={item.id}
-                  layoutId={item.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ delay: idx * 0.1 }}
-                  onClick={() => setSelectedItem(item)}
-                  className="glass-card p-6 cursor-pointer group hover:border-milk-blue/50 transition-colors"
+                <button
+                  key={cat.id}
+                  onClick={() => {
+                    setActiveCategory(cat.id);
+                    setSelectedItem(null);
+                  }}
+                  className={`flex items-center justify-between px-4 py-3 text-sm transition-all group ${
+                    activeCategory === cat.id 
+                      ? 'bg-ink text-paper font-medium' 
+                      : 'text-slate-500 hover:bg-slate-100 hover:text-ink'
+                  }`}
                 >
-                  <div className="w-12 h-12 rounded-2xl bg-milk-blue/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    <Icon className="text-milk-blue" size={24} />
+                  <div className="flex items-center gap-3">
+                    <Icon size={16} className={activeCategory === cat.id ? 'text-accent' : 'text-slate-300 group-hover:text-slate-400'} />
+                    <span>{cat.label}</span>
                   </div>
-                  <h3 className="text-xl font-bold text-slate-800 mb-2 group-hover:text-milk-blue transition-colors">
-                    {item.name}
-                  </h3>
-                  <p className="text-sm text-slate-500 mb-4 line-clamp-2">
-                    {item.description}
-                  </p>
-                  {item.fat && (
-                    <div className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-tighter">
-                      <span>Fat: {item.fat}</span>
-                    </div>
-                  )}
-                  <div className="mt-6 flex items-center text-milk-blue text-xs font-bold group-hover:gap-3 gap-2 transition-all">
-                    <span>EXPLORE DETAIL</span>
-                    <ChevronRight size={14} />
-                  </div>
-                </motion.div>
+                  {activeCategory === cat.id && <ChevronRight size={14} className="text-accent" />}
+                </button>
               );
             })}
-          </AnimatePresence>
-        </div>
+          </div>
 
-        {/* Detail Modal Overlay */}
-        <AnimatePresence>
-          {selectedItem && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center px-6 pointer-events-none">
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setSelectedItem(null)}
-                className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm pointer-events-auto"
-              />
-              <motion.div
-                layoutId={selectedItem.id}
-                className="relative bg-white w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl pointer-events-auto"
-              >
-                <div className="h-48 bg-milk-blue relative overflow-hidden">
-                  <div 
-                    className="absolute inset-0 opacity-30"
-                    style={{
-                      backgroundImage: `radial-gradient(circle at 2px 2px, white 1px, transparent 0)`,
-                      backgroundSize: '24px 24px'
-                    }}
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <selectedItem.icon className="text-white w-24 h-24 opacity-20" />
-                  </div>
-                </div>
-                <div className="p-8 md:p-12">
-                  <div className="flex justify-between items-start mb-8">
-                    <div>
-                      <h2 className="text-4xl font-serif font-bold text-slate-800 mb-2">{selectedItem.name}</h2>
-                      <p className="text-milk-blue font-medium uppercase tracking-widest text-xs">
-                        {categoryConfigs.find(c => c.id === activeCategory)?.label}
-                      </p>
-                    </div>
-                    <button 
-                      onClick={() => setSelectedItem(null)}
-                      className="p-2 hover:bg-slate-100 rounded-full transition-colors text-slate-400"
+          {/* Content Area */}
+          <div className="flex-1 p-8 md:p-16 border-x border-line">
+            <motion.div
+              key={activeCategory}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="mb-16"
+            >
+              <h2 className="text-5xl md:text-6xl mb-4 leading-tight">{MILK_DATA[activeCategory].title}</h2>
+              <p className="text-slate-400 font-mono text-[10px] uppercase tracking-[0.2em]">{MILK_DATA[activeCategory].subtitle}</p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <AnimatePresence mode="wait">
+                {MILK_DATA[activeCategory].items.map((item, idx) => {
+                  const Icon = item.icon;
+                  return (
+                    <motion.div
+                      key={item.id}
+                      layoutId={item.id}
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: idx * 0.05 }}
+                      onClick={() => setSelectedItem(item)}
+                      className="group relative border border-line p-8 hover:border-ink cursor-pointer bg-white transition-all duration-300"
                     >
-                      <PlusCircle className="rotate-45" size={24} />
-                    </button>
+                      <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-100 transition-opacity">
+                        <Icon size={40} className="text-ink" />
+                      </div>
+                      <div className="mono text-accent mb-4 font-bold flex items-center justify-between">
+                         ID: {item.id.toUpperCase()}
+                         <span className="w-2 h-2 rounded-full bg-line group-hover:bg-accent transition-colors" />
+                      </div>
+                      <h3 className="text-3xl mb-4 group-hover:translate-x-2 transition-transform duration-500">{item.name}</h3>
+                      <p className="text-slate-500 font-light mb-8 leading-relaxed line-clamp-2">{item.description}</p>
+                      
+                      <div className="flex items-center justify-between border-t border-line pt-6">
+                        <div className="flex flex-col gap-1">
+                          <div className="flex items-center gap-4 text-[10px] font-mono font-bold text-slate-400 uppercase">
+                            {item.fat && <span>{item.fat} FAT</span>}
+                            {item.shelfLife && <span className="text-accent/60">STABLE</span>}
+                          </div>
+                          {item.avgPrice && (
+                            <span className="text-[10px] font-mono font-bold text-accent">{item.avgPrice}</span>
+                          )}
+                        </div>
+                        <div className="w-8 h-8 rounded-full border border-line flex items-center justify-center group-hover:bg-ink group-hover:text-paper transition-all">
+                          <PlusCircle size={14} />
+                        </div>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </AnimatePresence>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Detail Overlay */}
+      <AnimatePresence>
+        {selectedItem && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-end">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedItem(null)}
+              className="absolute inset-0 bg-ink/40 backdrop-blur-sm"
+            />
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="relative bg-white w-full max-w-xl h-full shadow-2xl overflow-y-auto px-12 py-20 border-l border-line"
+            >
+              <button 
+                onClick={() => setSelectedItem(null)}
+                className="absolute top-8 right-8 text-slate-400 hover:text-ink"
+              >
+                <PlusCircle className="rotate-45" size={32} />
+              </button>
+
+              <div className="mb-20">
+                <span className="mono text-accent mb-4 block font-bold">
+                  {activeCategory === 'nafdac' ? 'Regulatory Compliance' : 'Subject Analysis'}
+                </span>
+                <h2 className="text-6xl mb-6">{selectedItem.name}</h2>
+                <p className="text-xl text-slate-500 font-light leading-relaxed italic border-l-2 border-accent/20 pl-6">
+                  {selectedItem.description}
+                </p>
+              </div>
+
+                <div className="space-y-12">
+                {activeCategory !== 'nafdac' && (
+                  <div className="grid grid-cols-2 gap-px bg-line border border-line">
+                    <div className="bg-slate-50 p-6">
+                        <span className="mono text-slate-400 block mb-2 text-[10px] uppercase font-bold tracking-wider">Storage Stability</span>
+                        <span className="text-lg font-serif italic text-slate-700">{selectedItem.shelfLife || 'Check Packaging'}</span>
+                    </div>
+                    <div className="bg-slate-50 p-6">
+                        <span className="mono text-slate-400 block mb-2 text-[10px] uppercase font-bold tracking-wider">Fat Matrix</span>
+                        <span className="text-lg font-serif italic text-slate-700">{selectedItem.fat || 'Variable'}</span>
+                    </div>
+                    <div className="bg-slate-50 p-6 col-span-2 border-t border-line">
+                        <span className="mono text-slate-400 block mb-2 text-[10px] uppercase font-bold tracking-wider">Market Valuation (est.)</span>
+                        <span className="text-lg font-mono text-accent">{selectedItem.avgPrice || 'Premium/Variable'}</span>
+                    </div>
                   </div>
+                )}
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-                    <div>
-                      <h4 className="flex items-center gap-2 text-slate-800 font-bold mb-4">
-                        <Info size={16} className="text-milk-blue" />
-                        Key Characteristics
-                      </h4>
-                      <p className="text-slate-600 leading-relaxed text-sm">
-                        {selectedItem.characteristics}
-                      </p>
+                {activeCategory !== 'nafdac' && selectedItem.characteristics && (
+                  <div className="space-y-6">
+                    <h4 className="mono text-slate-400 flex items-center gap-2 font-bold uppercase text-[10px] tracking-widest">
+                      <Info size={12} className="text-accent" /> Characteristics & Bio-Logic
+                    </h4>
+                    <p className="text-slate-600 leading-relaxed font-light">
+                      {selectedItem.characteristics}
+                    </p>
+                  </div>
+                )}
 
-                      {selectedItem.nafdacStandard && (
-                        <div className="mt-6 p-4 bg-emerald-50 border border-emerald-100 rounded-xl">
-                          <h5 className="text-emerald-800 text-xs font-bold uppercase mb-2">NAFDAC Regulation</h5>
-                          <p className="text-emerald-700 text-xs italic">
-                            {selectedItem.nafdacStandard}
-                          </p>
+                {activeCategory !== 'nafdac' && (
+                  <div className="space-y-6">
+                    <h4 className="mono text-slate-400 flex items-center gap-2 font-bold uppercase text-[10px] tracking-widest">
+                      <TableIcon size={12} className="text-accent" /> Technical Specs
+                    </h4>
+                    {selectedItem.nutritionalValue && (
+                      <div className="grid grid-cols-3 gap-px bg-line border border-line mb-4">
+                        {selectedItem.nutritionalValue.map((nv, i) => (
+                          <div key={i} className="bg-slate-50 p-4 text-center">
+                            <span className="mono text-[9px] text-slate-400 block mb-1 uppercase font-bold">{nv.label}</span>
+                            <span className="text-sm font-bold text-accent">{nv.value}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    <div className="grid grid-cols-1 gap-2">
+                      {selectedItem.brands && (
+                        <div className="p-4 border border-line bg-slate-50/30 flex flex-col gap-1">
+                          <span className="mono text-[9px] text-slate-400 uppercase font-bold">Leading Manufacturers</span>
+                          <span className="text-sm text-slate-700 font-medium">{selectedItem.brands}</span>
                         </div>
                       )}
-                    </div>
-                    <div>
-                      <h4 className="flex items-center gap-2 text-slate-800 font-bold mb-4">
-                        <TableIcon size={16} className="text-milk-blue" />
-                        Quick Stats
-                      </h4>
-                      <ul className="space-y-3">
-                        {selectedItem.fat && (
-                          <li className="flex justify-between text-sm py-1 border-b border-slate-50">
-                            <span className="text-slate-400">Fat Level</span>
-                            <span className="font-bold text-slate-700">{selectedItem.fat}</span>
-                          </li>
-                        )}
-                        {selectedItem.shelfLife && (
-                          <li className="flex justify-between text-sm py-1 border-b border-slate-50">
-                            <span className="text-slate-400">Shelf Life</span>
-                            <span className="font-bold text-slate-700">{selectedItem.shelfLife}</span>
-                          </li>
-                        )}
-                        {selectedItem.avgPrice && (
-                          <li className="flex justify-between text-sm py-1 border-b border-slate-50">
-                            <span className="text-slate-400">Est. Price</span>
-                            <span className="font-bold text-slate-700">{selectedItem.avgPrice}</span>
-                          </li>
-                        )}
-                        {selectedItem.brands && (
-                          <li className="flex flex-col gap-1 text-sm py-1 border-b border-slate-50">
-                            <span className="text-slate-400">Major Brands</span>
-                            <span className="font-medium text-slate-600">{selectedItem.brands}</span>
-                          </li>
-                        )}
-                      </ul>
-
-                      {selectedItem.nutritionalValue && (
-                        <div className="mt-4 grid grid-cols-3 gap-2">
-                          {selectedItem.nutritionalValue.map((stat, i) => (
-                            <div key={i} className="bg-slate-50 p-2 rounded-lg text-center">
-                              <div className="text-[10px] text-slate-400 font-bold uppercase">{stat.label}</div>
-                              <div className="text-sm font-display font-bold text-milk-blue">{stat.value}</div>
-                            </div>
-                          ))}
+                      {selectedItem.details.length > 0 && selectedItem.details.map((d, i) => (
+                        <div key={i} className="p-4 border border-line flex items-center justify-between text-sm group hover:bg-slate-50 transition-colors">
+                          <span className="text-slate-500">{d}</span>
+                          <ChevronRight size={10} className="text-slate-300 group-hover:text-accent" />
                         </div>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="bg-slate-50 rounded-2xl p-6">
-                    <h4 className="text-slate-800 font-bold mb-4 text-sm uppercase tracking-wider">Features & Processing</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {selectedItem.details.map((detail, idx) => (
-                        <span key={idx} className="bg-white border border-slate-200 px-3 py-1 rounded-lg text-xs font-medium text-slate-600 shadow-sm">
-                          {detail}
-                        </span>
                       ))}
                     </div>
                   </div>
-                </div>
-              </motion.div>
-            </div>
-          )}
-        </AnimatePresence>
+                )}
 
-        {/* Facts Banner */}
-        <section className="mt-24 bg-milk-cream rounded-[2.5rem] p-12 relative overflow-hidden">
-          <div className="relative z-10 flex flex-col md:flex-row items-center gap-12">
-            <div className="flex-1">
-              <h2 className="text-4xl font-serif font-bold text-slate-800 mb-6">Did you know?</h2>
-              <p className="text-slate-700 text-lg leading-relaxed mb-8">
-                Commercial milk processing like <strong>homogenization</strong> was developed to keep the cream from separating 
-                and floating to the top, ensuring every sip has the same consistency and fat content.
-              </p>
-              <div className="flex gap-4">
-                <div className="bg-white/50 p-4 rounded-2xl backdrop-blur-sm border border-white/40">
-                  <p className="text-xs font-bold text-slate-400 mb-1 uppercase">Standard Temp</p>
-                  <p className="text-xl font-display font-bold text-slate-800">71.7°C</p>
-                </div>
-                <div className="bg-white/50 p-4 rounded-2xl backdrop-blur-sm border border-white/40">
-                  <p className="text-xs font-bold text-slate-400 mb-1 uppercase">UHT Shelf Life</p>
-                  <p className="text-xl font-display font-bold text-slate-800">9 Months</p>
-                </div>
+                {selectedItem.nafdacStandard && (
+                  <div className="p-8 bg-ink text-paper border-l-4 border-accent">
+                    <span className="mono text-accent block mb-4 text-[10px] uppercase font-bold tracking-widest">Nigeria Regulatory (NAFDAC)</span>
+                    <p className="text-sm border-l border-accent/30 pl-4 py-2 font-light italic text-slate-300">
+                      {selectedItem.nafdacStandard}
+                    </p>
+                  </div>
+                )}
               </div>
-            </div>
-            <div className="w-full md:w-1/3">
-              <div className="aspect-square rounded-3xl overflow-hidden shadow-xl rotate-3">
-                <img 
-                  src="https://images.unsplash.com/photo-1528498033373-3c6c08e93d79?auto=format&fit=crop&q=80&w=600" 
-                  alt="Glass of milk" 
-                  className="w-full h-full object-cover"
-                  referrerPolicy="no-referrer"
-                />
-              </div>
-            </div>
+            </motion.div>
           </div>
-          {/* Decorative shapes */}
-          <div className="absolute top-10 right-10 w-32 h-32 bg-milk-blue/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-10 left-10 w-48 h-48 bg-white/20 rounded-full blur-2xl" />
-        </section>
-      </main>
+        )}
+      </AnimatePresence>
 
       {/* Footer */}
-      <footer className="mt-24 border-t border-slate-100 py-12 px-6">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="flex items-center gap-3">
-            <div className="bg-milk-blue p-2 rounded-lg">
-              <Milk className="text-white" size={20} />
+      <footer className="border-t border-line bg-white py-24 px-6 text-center">
+         <div className="max-w-2xl mx-auto space-y-8">
+            <h2 className="text-4xl italic">Milk is a technology.</h2>
+            <p className="text-slate-400 font-light leading-relaxed">
+              From the centrifuge to the UHT furnace, the journey of liquid dairy is one of constant modification. 
+              Understanding these classifications is understanding the intersection of biology and extreme engineering.
+            </p>
+            <div className="flex justify-center gap-12 pt-8">
+               <div className="text-left">
+                  <span className="mono text-slate-300 block mb-2">Standard</span>
+                  <span className="text-sm font-serif">ISO 22000</span>
+               </div>
+               <div className="text-left">
+                  <span className="mono text-slate-300 block mb-2">Ethics</span>
+                  <span className="text-sm font-serif">Animal Welfare</span>
+               </div>
+               <div className="text-left">
+                  <span className="mono text-slate-300 block mb-2">Science</span>
+                  <span className="text-sm font-serif">Food Tech</span>
+               </div>
             </div>
-            <span className="font-serif font-bold text-xl text-slate-800 italic">Milk Classified</span>
-          </div>
-          <div className="flex gap-8 text-sm font-medium text-slate-400 tracking-wider">
-            <span className="hover:text-milk-blue cursor-pointer transition-colors">THEORY</span>
-            <span className="hover:text-milk-blue cursor-pointer transition-colors">NUTRITION</span>
-            <span className="hover:text-milk-blue cursor-pointer transition-colors">PROCESSING</span>
-          </div>
-          <p className="text-xs text-slate-300 font-mono tracking-tighter">
-            © 2026 DAIRY EDU. ALL RIGHTS RESERVED.
-          </p>
-        </div>
+         </div>
       </footer>
     </div>
   );

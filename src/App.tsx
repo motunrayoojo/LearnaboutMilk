@@ -470,26 +470,26 @@ export default function App() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <span className="mono text-accent mb-6 block font-bold">The Great Modification</span>
+            <span className="mono text-accent mb-6 block font-bold">The Complete Guide</span>
             <h1 className="text-6xl md:text-8xl leading-[0.9] mb-12 tracking-tight">
-              Nobody drinks <br />
-              <span className="text-slate-300 italic">"real milk"</span>
+              Learn about milk <br />
+              <span className="text-slate-300 italic">and stop panicking</span>
             </h1>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
               <div className="space-y-6">
                 <p className="text-xl text-slate-600 font-light leading-relaxed">
-                  When milk is extracted from the animal, it is a biological fluid designed for calves. For humans, 
-                  "real" raw milk is a high-risk gamble. What we consume instead is a highly engineered product.
+                  Milk is one of the most misunderstood staples in our pantry. From complex processing to modern dietary 
+                  adaptations, understanding what you're drinking is the first step to clarity.
                 </p>
                 <div className="h-px w-24 bg-accent/30" />
                 <p className="text-slate-500 leading-relaxed font-light">
-                  Through pasteurisation, nutrients are subtracted, added, or fortified. Commercial dairy is 
-                  modified for safety, dietary compatibility, shelf life, and the brutal demands of global economics.
+                  Whether you are navigating NAFDAC regulations, exploring plant-based alternatives, or analyzing fat 
+                  matrices, this encyclopedia provides the technical foundation you need to choose with confidence.
                 </p>
               </div>
               <div className="p-8 border border-line bg-slate-50/50 italic text-slate-500 font-serif leading-relaxed text-sm">
-                "In essence, modern milk is not a natural occurrence but a technological achievement—a liquid 
-                infrastructure refined to survive the supply chain and fit our specific nutritional blueprints."
+                "Information is the best antidote to uncertainty. By breaking down milk into its core classifications, 
+                we transform a biological complexity into accessible technical knowledge."
               </div>
             </div>
           </motion.div>
@@ -699,10 +699,10 @@ export default function App() {
       {/* Footer */}
       <footer className="border-t border-line bg-white py-24 px-6 text-center">
          <div className="max-w-2xl mx-auto space-y-8">
-            <h2 className="text-4xl italic">Milk is a technology.</h2>
+            <h2 className="text-4xl italic">Knowledge is clarity.</h2>
             <p className="text-slate-400 font-light leading-relaxed">
-              From the centrifuge to the UHT furnace, the journey of liquid dairy is one of constant modification. 
-              Understanding these classifications is understanding the intersection of biology and extreme engineering.
+              From traditional sources to modern plant-based innovations, dairy and its alternatives represent an 
+              incredible journey of nutritional adaptation. This encyclopedia is here to help you navigate it all.
             </p>
             <div className="flex justify-center gap-12 pt-8">
                <div className="text-left">
